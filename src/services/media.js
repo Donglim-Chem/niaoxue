@@ -89,6 +89,14 @@ export function baikeUrl(bird) {
   return `https://baike.baidu.com/item/${encodeURIComponent(bird.name)}`
 }
 
+function birdReportSearch(bird) {
+  const payload = JSON.stringify({ taxonname: bird.name })
+  const bytes = new TextEncoder().encode(payload)
+  let binary = ''
+  for (const byte of bytes) binary += String.fromCharCode(byte)
+  return btoa(binary)
+}
+
 export function videoLinks(bird) {
   return [
     {
@@ -104,7 +112,7 @@ export function videoLinks(bird) {
     {
       label: '中国观鸟记录中心',
       hint: '国内实际观测记录与分布',
-      url: `https://www.birdreport.cn/home/search/list.html?search=${encodeURIComponent(bird.name)}`,
+      url: `https://www.birdreport.cn/home/search/report.html?search=${encodeURIComponent(birdReportSearch(bird))}`,
     },
     {
       label: '百度图片',
